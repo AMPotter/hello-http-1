@@ -8,7 +8,7 @@ chai.use(chaiHttp);
 describe('http app', () => {
     
     const server = http.createServer(app);
-    const request = chai.request(server);
+    const request = chai.request(server).keepOpen();
     after(done => server.close(done));
 
     it('GET /greeting/name responds with greeting', done => {
@@ -42,8 +42,8 @@ describe('http app', () => {
     it('Replies with 404 for bad path', done => {
         request.get('/bad')
             .end((err, res) => {
-                if(!err) return done('expected err response');
-                assert.equal(err.status, 404);
+                if(res.status !== 404) return done('expected err response');
+                assert.equal(res.status, 404);
                 assert.equal(res.text, 'Cannot GET /bad');
                 done();
             });
