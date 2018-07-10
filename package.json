@@ -8,7 +8,7 @@
     "pretest": "npm run lint",
     "mocha": "mocha",
     "test": "npm run mocha",
-    "dev": "npm run mocha -- -w",
+    "dev": "nodemon --exec 'npm run mocha -s'",
     "start": "nodemon server.js"
   },
   "repository": {
